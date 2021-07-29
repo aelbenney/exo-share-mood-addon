@@ -12,10 +12,10 @@
       <useProjectArtifact>false</useProjectArtifact>
       <outputDirectory>webapps</outputDirectory>
       <includes>
-        <include>${project.groupId}:share-mood-portlets:war</include>
+        <include>${project.groupId}:share-mood:war</include>
       </includes>
       <scope>provided</scope>
-      <outputFileNameMapping>share-mood-portlets.war</outputFileNameMapping>
+      <outputFileNameMapping>share-mood.war</outputFileNameMapping>
     </dependencySet>
     <!-- Libraries -->
     <dependencySet>
