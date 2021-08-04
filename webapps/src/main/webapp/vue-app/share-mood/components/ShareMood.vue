@@ -8,13 +8,13 @@
         :key="emoji.id"
         class="icons"
         :class="[emoji.iconName,emoji.name, { moodSelected: emoji.isMoodSelected }]"
-        @click="moodGenerator(emoji.id)">
+        @click="selectMood(emoji.id)">
       </i>
     </div>
     <v-spacer />
     <br>
     <v-btn
-      v-if="buttonDisplay"
+      v-if="selectedMood"
       class="py-2"
       style="height: 16px"
       depressed
@@ -27,8 +27,6 @@
 <script>
 export default {
   data: () => ({
-    buttonDisplay: false,
-    fontSize: '55',
     emoticons: [
       {
         id: 0,
@@ -76,15 +74,11 @@ export default {
     }
   },
   methods: {
-    moodGenerator: function (id) {
+    selectMood: function (id) {
       if ( this.selectedMood && this.emoticons[id].isMoodSelected === false ) {
-
         this.selectedMood.isMoodSelected = false;
       }
-
       this.emoticons[id].isMoodSelected = !this.emoticons[id].isMoodSelected;
-
-      this.buttonDisplay = this.emoticons[id].isMoodSelected
     },
   },
 }
