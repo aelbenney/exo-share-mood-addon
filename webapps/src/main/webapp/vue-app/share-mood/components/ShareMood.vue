@@ -1,5 +1,7 @@
 <template>
-  <p>hello from share mood</p>
+  <div id="shareMoodApp">
+    <p>hello from share mood</p>
+  </div>
 </template>
 
 <script>

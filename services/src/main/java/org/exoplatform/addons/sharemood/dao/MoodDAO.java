@@ -1,4 +1,4 @@
-package org.exoplatform.addons.sharemood.services;
+package org.exoplatform.addons.sharemood.dao;
 
 import org.exoplatform.addons.sharemood.entity.MoodEntity;
 import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
