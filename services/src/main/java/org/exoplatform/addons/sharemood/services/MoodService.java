@@ -22,7 +22,6 @@ public class MoodService {
 
     public MoodDTO saveMood(MoodEntity.Mood mood, String userName) {
       MoodEntity moodEntity = new MoodEntity();
-      moodEntity = new MoodEntity();
       moodEntity.setWhen(Calendar.getInstance());
       moodEntity.setUserName(userName);
       moodEntity.setSelectedMood(mood);

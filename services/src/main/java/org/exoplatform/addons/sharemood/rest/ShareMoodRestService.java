@@ -1,10 +1,11 @@
 package org.exoplatform.addons.sharemood.rest;
 
-import io.swagger.annotations.Api;
+import io.swagger.annotations.*;
+import org.apache.commons.lang.StringUtils;
 import org.exoplatform.addons.sharemood.entity.MoodEntity;
 import org.exoplatform.addons.sharemood.services.MoodDTO;
 import org.exoplatform.addons.sharemood.services.MoodService;
-import org.exoplatform.container.PortalContainer;
+import org.exoplatform.common.http.HTTPStatus;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -18,32 +19,45 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-@Path("/sharemood/")
-@Api(value = "/sharemood/", description = "Manages shared mood of current user") // NOSONAR
-public class ShareMooodRestService implements ResourceContainer {
-  private static final Log LOG = ExoLogger.getExoLogger(ShareMooodRestService.class);
+@Path("/shareMood")
+@Api(value = "/shareMood", description = "Manages shared mood of current user") // NOSONAR
+public class ShareMoodRestService implements ResourceContainer {
+  private static final Log LOG = ExoLogger.getExoLogger(ShareMoodRestService.class);
 
   private MoodService moodService;
 
-  public ShareMooodRestService(MoodService moodService) {
+  public ShareMoodRestService(MoodService moodService) {
     this.moodService = moodService;
   }
 
   @POST
+  @Consumes(MediaType.TEXT_PLAIN)
   @Produces(MediaType.APPLICATION_JSON)
   @RolesAllowed("users")
-  public Response saveMood(@QueryParam("mood") String mood) {
+  @ApiResponses(
+    value = { @ApiResponse(code = HTTPStatus.NO_CONTENT, message = "Request fulfilled"),
+      @ApiResponse(code = HTTPStatus.BAD_REQUEST, message = "Invalid query input"),
+      @ApiResponse(code = HTTPStatus.UNAUTHORIZED, message = "Unauthorized operation"),
+      @ApiResponse(code = HTTPStatus.INTERNAL_ERROR, message = "Internal server error"),
+    }
+  )
+  public Response saveMood(@QueryParam(value = "mood") String mood) {
     try {
+      if (StringUtils.isBlank(mood)) {
+        return Response.status(Response.Status.BAD_REQUEST).entity("Shared mood should not be empty").build();
+      }
       String loggedInUser = ConversationState.getCurrent().getIdentity().getUserId();
+      if (loggedInUser == null) {
+        return Response.status(Response.Status.FORBIDDEN).build();
+      }
       MoodDTO moodDTO = moodService.saveMood(MoodEntity.Mood.valueOf(mood.toUpperCase()), loggedInUser);
-      return Response.ok("Mood Updated to " + moodDTO.getMood() + " for user " + moodDTO.getUsername(),
+      return Response.ok("Mood Saved to " + moodDTO.getMood() + " for user " + moodDTO.getUsername(),
                          MediaType.APPLICATION_JSON_TYPE)
                      .build();
     } catch (Exception e) {
-      LOG.error("Error while calling /rest/sharemood/update Rest service", e);
+      LOG.error("Error while saving shared mood for current user", e);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
   }

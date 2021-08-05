@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 @ExoEntity
 @Entity
-@Table(name = "SHARE_MOOD")
+@Table(name = "ADDON_MOOD_ENTITY")
 @NamedQueries({
     @NamedQuery(name = "MoodEntity.findByUsernameAndDate", query = "SELECT m FROM MoodEntity m WHERE m.userName= :userName AND m.when = :when"),
     @NamedQuery(name = "MoodEntity.findByUsername", query = "SELECT m FROM MoodEntity m WHERE m.userName= :userName  ORDER BY m.when ASC"),
@@ -65,6 +65,6 @@ public class MoodEntity {
     }
 
     public enum Mood {
-    CRYING, SAD, SPEECHLESS, SMILE, FLAUGH
+    CRYING, SAD, SPEECHLESS, SMILE, LAUGH
   }
 }

@@ -18,38 +18,36 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 -->
-<databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <!-- Managing both DB that use sequences and db that use auto increment -->
-    <property name="autoIncrement" value="true" dbms="mysql,mssql,h2,sybase,db2,hsqldb"/>
-    <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
+  <!-- Managing both DB that use sequences and db that use auto increment -->
+  <property name="autoIncrement" value="true" dbms="mysql,mssql,h2,sybase,db2,hsqldb"/>
+  <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
 
-    <!-- Managing auto generation of timestamp by Database -->
-    <property name="now" value="now()" dbms="mysql,hsqldb,postgresql,h2"/>
-    <property name="now" value="sysdate" dbms="oracle"/>
-    <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
+  <!-- Managing auto generation of timestamp by Database -->
+  <property name="now" value="now()" dbms="mysql,hsqldb,postgresql,h2"/>
+  <property name="now" value="sysdate" dbms="oracle"/>
+  <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
 
-    <changeSet author="addon-share-mood" id="1.0.0-1">
-        <createTable tableName="ADDON_MOOD_ENTITY">
-            <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_MOOD_ENTITY"></constraints>
-            </column>
-            <column name="UPDATED" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="USERNAME" type="NVARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="MOOD_SELECTED" type="NVARCHAR(20)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <modifySql dbms="mysql">
-            <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
-        </modifySql>
-    </changeSet>
+  <changeSet author="addon-share-mood" id="1.0.0-1">
+    <createTable tableName="ADDON_MOOD_ENTITY">
+      <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_MOOD_ENTITY"></constraints>
+      </column>
+      <column name="UPDATED" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="USERNAME" type="NVARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="MOOD_SELECTED" type="NVARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <modifySql dbms="mysql">
+      <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+    </modifySql>
+  </changeSet>
 </databaseChangeLog>

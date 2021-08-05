@@ -26,12 +26,11 @@
         <type>org.exoplatform.commons.persistence.impl.EntityManagerService</type>
     </component>
     <component>
-        <key>org.exoplatform.addons.sharemood.services.ShareMoodRestService</key>
-        <type>org.exoplatform.addons.sharemood.services.ShareMoodRestService</type>
+        <type>org.exoplatform.addons.sharemood.rest.ShareMoodRestService</type>
     </component>
     <component>
-        <key>org.exoplatform.addons.sharemood.services.MoodDAO</key>
-        <type>org.exoplatform.addons.sharemood.services.MoodDAO</type>
+        <key>org.exoplatform.addons.sharemood.dao.MoodDAO</key>
+        <type>org.exoplatform.addons.sharemood.dao.MoodDAO</type>
     </component>
     <component>
         <key>org.exoplatform.addons.sharemood.services.MoodService</key>

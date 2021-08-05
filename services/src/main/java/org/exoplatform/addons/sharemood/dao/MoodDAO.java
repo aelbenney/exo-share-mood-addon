@@ -6,7 +6,6 @@ import org.exoplatform.commons.persistence.impl.GenericDAOJPAImpl;
 import javax.persistence.NoResultException;
 import javax.persistence.TemporalType;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MoodDAO extends GenericDAOJPAImpl<MoodEntity, Long> {
