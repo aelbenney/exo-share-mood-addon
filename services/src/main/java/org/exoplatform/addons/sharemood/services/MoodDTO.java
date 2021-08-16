@@ -5,14 +5,24 @@ import org.exoplatform.addons.sharemood.entity.MoodEntity;
 import java.util.Calendar;
 
 public class MoodDTO {
+    private Long id;
     private String username;
     private Calendar when;
     private MoodEntity.Mood mood;
 
-    public MoodDTO(String userName, MoodEntity.Mood selectedMood, Calendar when) {
+    public MoodDTO(Long id,String userName, MoodEntity.Mood selectedMood, Calendar when) {
+        this.id = id;
         this.username = userName;
         this.mood = selectedMood;
         this.when = when;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {

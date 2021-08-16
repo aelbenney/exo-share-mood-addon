@@ -2,7 +2,9 @@ package org.exoplatform.addons.sharemood.rest;
 
 import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
+import org.exoplatform.addons.sharemood.Utils.EntityBuilder;
 import org.exoplatform.addons.sharemood.entity.MoodEntity;
+import org.exoplatform.addons.sharemood.entity.rest.Mood;
 import org.exoplatform.addons.sharemood.services.MoodDTO;
 import org.exoplatform.addons.sharemood.services.MoodService;
 import org.exoplatform.common.http.HTTPStatus;
@@ -53,9 +55,8 @@ public class ShareMoodRestService implements ResourceContainer {
         return Response.status(Response.Status.FORBIDDEN).build();
       }
       MoodDTO moodDTO = moodService.saveMood(MoodEntity.Mood.valueOf(mood.toUpperCase()), loggedInUser);
-      return Response.ok("Mood Saved to " + moodDTO.getMood() + " for user " + moodDTO.getUsername(),
-                         MediaType.APPLICATION_JSON_TYPE)
-                     .build();
+      Mood moodSaved = EntityBuilder.convertToMood(moodDTO);
+      return Response.ok(moodSaved).build();
     } catch (Exception e) {
       LOG.error("Error while saving shared mood for current user", e);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -126,15 +127,12 @@ public class ShareMoodRestService implements ResourceContainer {
   @Path("loadToday")
   @Produces(MediaType.APPLICATION_JSON)
   public Response loadMoodOfToday(@QueryParam("username") String username) {
-    MoodDTO moodOfToday = moodService.find(username, Calendar.getInstance());
-    JSONObject object = new JSONObject();
     try {
-      if (moodOfToday != null) {
-        object.put("mood", moodOfToday.getMood());
-      }
-      return Response.ok(object.toString(), MediaType.APPLICATION_JSON).build();
-    } catch (JSONException e) {
-      LOG.error("Could not check the saved mood of user {} ", username, e);
+      MoodDTO moodOfToday = moodService.find(username, Calendar.getInstance());
+      Mood moodSaved = EntityBuilder.convertToMood(moodOfToday);
+      return Response.ok(moodSaved).build();
+    } catch (Exception e) {
+      LOG.error("Could not get the saved mood of user {} ", username, e);
       return Response.serverError().build();
     }
 
