@@ -2,46 +2,63 @@
 @import "mixins.less";
 
 #ShareMoodApp {
-  .try {
-    color: #005ac2;
-  }
-  .icons{
-    font-size: 55px;
-   margin-right: 10px;
-  }
-
-  .flaugh{
-    color: #00E676;
-  }
-  .smile{
-    color: #8BC34A;
-  }
-  .speechless{
-    color: #D4E157;
-    font-size: 50px;
-  }
-  .crying{
-    color: #FF7043;
-  }
-  .sad{
-    color: #FF3D00;
+  .icon{
+    font-size: 45px;
+    margin-right: 5px;
+    cursor: pointer;
   }
   .moodSelected {
-    background-color: #E0F7FA;
+    background-color: #EEEEEE;
+    padding: 5px 5px 5px 5px;
+  }
+  .EXCITED{
+    color: #00E676;
+  }
+  .SMILE{
+    color: #8BC34A;
+  }
+  .SPEECHLESS{
+    color: #FF0;
+    font-size: 40px;
+    padding: 9px 9px 9px 9px;
+  }
+  .CRYING{
+    color: #FF7043;
+  }
+  .SAD{
+    color: #FF3D00;
+  }
 
+  .selected {
+    display: flex;
+    align-items: center;
+    .change {
+      flex-direction: row-reverse;
+      padding: 0;
+      min-width: 0px;
+      height: 17px;
+      width: 55.5px;
+    }
+  }
+  .selectedIcon{
+    font-size:35px;
+
+  }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.7s
+  }
+
+  .fade-enter,
+  .fade-leave-to
+    /* .fade-leave-active in <2.1.8 */
+
+  {
+    opacity: 0
   }
 }
 
-.moodItem {
-  padding: 0 124px 0 124px;
-  height: 35px;
-  border: 1px solid #f8f8f8;
-  border-radius: 8px;
-  background-color: #ededed;
-}
-.moodItem:hover {
-  transform: scaleY(1.2);
-}
+
 .mood-app-emoticon {
   display: inline-block;
   /* color: transparent; */

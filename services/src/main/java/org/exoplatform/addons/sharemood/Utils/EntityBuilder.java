@@ -25,7 +25,7 @@ public class EntityBuilder {
     Mood mood = new Mood();
     mood.setId(moodDTO.getId());
     mood.setUsername(moodDTO.getUsername());
-    mood.setWhen(moodDTO.getWhen().getInstance().getTime());
+    mood.setWhen(moodDTO.getWhen().getTime());
     mood.setMood(moodDTO.getMood().toString());
     return mood;
   }
