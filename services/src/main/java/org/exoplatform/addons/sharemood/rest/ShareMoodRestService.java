@@ -21,6 +21,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Path("/shareMood")
@@ -70,9 +71,8 @@ public class ShareMoodRestService implements ResourceContainer {
     try {
       String loggedInUser = ConversationState.getCurrent().getIdentity().getUserId();
       MoodDTO moodDTO = moodService.updateMood(MoodEntity.Mood.valueOf(mood.toUpperCase()), loggedInUser);
-      return Response.ok("Mood Updated to " + moodDTO.getMood() + " for user " + moodDTO.getUsername(),
-                         MediaType.APPLICATION_JSON_TYPE)
-                     .build();
+      Mood updatesMood = EntityBuilder.convertToMood(moodDTO);
+      return Response.ok(updatesMood).build();
     } catch (Exception e) {
       LOG.error("Error while calling /rest/sharemood/update Rest service", e);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -85,7 +85,7 @@ public class ShareMoodRestService implements ResourceContainer {
   public Response loadMoods(@QueryParam("username") String username, @QueryParam("since") String since) {
     try {
       Calendar sinceDate = Calendar.getInstance();
-      sinceDate.set(Calendar.WEEK_OF_YEAR, sinceDate.getWeekYear() - 1);
+      //sinceDate.set(Calendar.WEEK_OF_YEAR, sinceDate.getWeekYear() - 1);
       if (since != null) {
         switch (since.toLowerCase()) {
         case "lastweek":
@@ -109,11 +109,12 @@ public class ShareMoodRestService implements ResourceContainer {
       JSONArray jsonArray = new JSONArray();
       for (MoodEntity.Mood mood : MoodEntity.Mood.values()) {
         List<MoodDTO> moods = moodService.loadMoods(username, mood, sinceDate);
-        JSONObject object = new JSONObject();
-        object.put("mood", mood);
-        object.put("count", moods.size());
-        object.put("period", since);
-        jsonArray.put(object);
+        JSONArray moodsList = new JSONArray();
+        for(int i = 0; i < moods.size(); i++) {
+          JSONObject object = new JSONObject(EntityBuilder.convertToMood(moods.get(i)));
+          moodsList.put(object);
+        }
+        jsonArray.put(moodsList);
       }
 
       return Response.ok(jsonArray.toString(), MediaType.APPLICATION_JSON).build();

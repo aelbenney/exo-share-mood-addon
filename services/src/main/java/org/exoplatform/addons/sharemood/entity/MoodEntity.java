@@ -65,6 +65,6 @@ public class MoodEntity {
     }
 
     public enum Mood {
-    CRYING, SAD, SPEECHLESS, SMILE, LAUGH
+      EXCITED, SMILE, SPEECHLESS, CRYING, SAD,
   }
 }

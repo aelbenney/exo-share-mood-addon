@@ -14,7 +14,7 @@
         </value-param>
         <value-param>
           <name>containerName</name>
-          <value>profile-before-about-me-container</value>
+          <value>profile-after-contact-information-container</value>
         </value-param>
         <object-param>
           <name>share-mood-portlet</name>
